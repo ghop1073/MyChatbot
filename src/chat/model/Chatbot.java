@@ -3,10 +3,9 @@ package chat.model;
 import java.util.ArrayList;
 
 /**
- * Base version of the 2015 Chatbot class. Only stub methods are provided. Students will complete methods as part of the project.
  * 
- * @author Nick Haynes
- * @version 1.6 10/28/15 Updated and created a switch method of conversation.
+ * @author mhop1073
+ *
  */
 public class Chatbot
 {

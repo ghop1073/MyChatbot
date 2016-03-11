@@ -8,8 +8,8 @@ import chat.controller.ChatController;
 import java.awt.event.*;
 
 /**
- * The panel class for use in other classes to set up our screen.
- * @author nhay7834
+ * 
+ * @author ghop1073
  *
  */
 

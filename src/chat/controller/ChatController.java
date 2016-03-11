@@ -6,13 +6,13 @@ import chat.model.Chatbot;
 /**
  * Controller for the chatbot project.
  * 
- * @author nhay7834
- * @version 1.3 10/23/15 Updated documentation and added a while loop.
+ * @author ghop1073
+ * @version 1.1 3/2/15
  */
 
 public class ChatController
 {
-	private Chatbot nickChatBot;
+	private Chatbot gageChatBot;
 	private ChatView chatDisplay;
 	private ChatFrame baseFrame;
 	private ChatPanel basePanel;
@@ -21,7 +21,7 @@ public class ChatController
 	{
 		chatDisplay = new ChatView();
 		String user = chatDisplay.getUserText("What is your name?");
-		nickChatBot = new Chatbot(user);
+		gageChatBot = new Chatbot(user);
 		baseFrame = new ChatFrame(this);
 
 	}
@@ -32,7 +32,7 @@ public class ChatController
 	 */
 	public void start()
 	{
-		chatDisplay.displayUserText("Hello " + nickChatBot.getUserName());
+		chatDisplay.displayUserText("Hello " + gageChatBot.getUserName());
 		//chat();
 	}
 
@@ -44,18 +44,18 @@ public class ChatController
 	{
 		String botResponse = "";
 		
-		if(nickChatBot.quitChecker(conversation))
+		if(gageChatBot.quitChecker(conversation))
 		{
 			shutDown();
 		}
-		botResponse = nickChatBot.processQuestion(conversation);
+		botResponse = gageChatBot.processQuestion(conversation);
 		
 		return botResponse;
 	}
 	
 	private void shutDown()
 	{
-		chatDisplay.displayUserText("GoodBye, " + nickChatBot.getUserName() + " Loved talking with you");
+		chatDisplay.displayUserText("GoodBye, " + gageChatBot.getUserName() + " Loved talking with you");
 		System.exit(0);
 	}
 	
@@ -64,22 +64,22 @@ public class ChatController
 	{
 		String conversation = chatDisplay.getUserText("Talk to the chatbot");
 
-		while (nickChatBot.lengthChecker(conversation))
+		while (gageChatBot.lengthChecker(conversation))
 		{
-			conversation = nickChatBot.processQuestion(conversation);
+			conversation = gageChatBot.processQuestion(conversation);
 			conversation = chatDisplay.getUserText(conversation);
 
 		}
 	}
 
-	public Chatbot getNickChatBot()
+	public Chatbot getgageChatBot()
 	{
-		return nickChatBot;
+		return gageChatBot;
 	}
 
 	public void setNickChatBot(Chatbot nickChatBot)
 	{
-		this.nickChatBot = nickChatBot;
+		this.gageChatBot = nickChatBot;
 	}
 
 	public ChatView getChatDisplay()
