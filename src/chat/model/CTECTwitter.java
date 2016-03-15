@@ -3,7 +3,8 @@ package chat.model;
 import twitter4j.*;
 import java.util.ArrayList;
 import chat.controller.ChatController;
-import java.util.List;
+import java.util.*;
+import java.io.*;
 
 public class CTECTwitter
 {
@@ -76,5 +77,36 @@ public class CTECTwitter
 				}
 			}
 		}
+		return wordList;
+	}
+	
+	private String[] importWordsToArray()
+	{
+		String[] boringWords;
+		int wordCount = 0;
+		try
+		{
+			Scanner wordFile = new Scanner(new File("commonWords.txt"));
+			while(wordFile.hasNext())
+			{
+				wordCount++;
+				wordFile.next();
+			}
+			wordFile.reset();
+			boringWords = new String[wordCount];
+			int boringWordCount = 0;
+			while(wordFile.hasNext())
+			{
+				boringWords[boringWordCount] = wordFile.next();
+				boringWordCount++;
+			}
+			wordFile.close();
+		}
+		catch(FileNotFoundException error)
+		{
+			baseController.handleErrors(error.getMessage());
+			return new String[0];
+		}
+		return boringWords;
 	}
 }

@@ -112,4 +112,11 @@ public class ChatController
 		this.basePanel = basePanel;
 	}
 
+
+	public void handleErrors(String errorMessage)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }
