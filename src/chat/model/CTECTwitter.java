@@ -60,4 +60,21 @@ public class CTECTwitter
 			}
 		}
 	}
+	
+	private List removeCommonEnglishWords(List<String> wordList)
+	{
+		String[] boringWords = importWordsToArray();
+		for(int count = 0; count < wordList.size(); count++)
+		{
+			for(int removeSpot = 0; removeSpot < boringWords.length; removeSpot++)
+			{
+				if(wordsList.get(count).equalsIgnoreCase(boringWords[removeSpot]))
+				{
+					wordList.remove(count);
+					count--;
+					removeSpot = boringWords.length;
+				}
+			}
+		}
+	}
 }
