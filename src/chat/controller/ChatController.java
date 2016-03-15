@@ -77,9 +77,9 @@ public class ChatController
 		return gageChatBot;
 	}
 
-	public void setNickChatBot(Chatbot nickChatBot)
+	public void setGageChatBot(Chatbot gageChatBot)
 	{
-		this.gageChatBot = nickChatBot;
+		this.gageChatBot = gageChatBot;
 	}
 
 	public ChatView getChatDisplay()
@@ -112,6 +112,7 @@ public class ChatController
 		this.basePanel = basePanel;
 	}
 
+	
 
 	public void handleErrors(String errorMessage)
 	{
