@@ -1,5 +1,6 @@
 package chat.controller;
 
+import twitter4j.TwitterException;
 import chat.view.*;
 import chat.model.Chatbot;
 
@@ -52,14 +53,7 @@ public class ChatController
 		
 		return botResponse;
 	}
-	
-	private void shutDown()
-	{
-		chatDisplay.displayUserText("GoodBye, " + gageChatBot.getUserName() + " Loved talking with you");
-		System.exit(0);
-	}
-	
-	
+
 	private void chat()
 	{
 		String conversation = chatDisplay.getUserText("Talk to the chatbot");
@@ -112,12 +106,33 @@ public class ChatController
 		this.basePanel = basePanel;
 	}
 
-	
-
-	public void handleErrors(String errorMessage)
+	public String analyze(String userName)
 	{
-		// TODO Auto-generated method stub
+		String userAnalysis = "The Twitter user " + userName +  " has many tweets. ";
+		try
+		{
+			chatTwitter.loadTweets(userName);
+		}
+		catch(TwitterException error)
+		{
+			handleErrors(error.getErrorMessage());
+		}
+		userAnalysis += chatTwitter.topResults();
+		
+		return userAnalysis;
+		
 		
 	}
 
+	public void handleErrors(String errorMessage)
+	{
+		chatDisplay.displayUserText(errorMessage);
+		
+	}
+
+	private void shutDown()
+	{
+		chatDisplay.displayUserText("Goodbye, " + gageChatBot.getUserName() + " it has been my pleasure to talk to you");
+		System.exit(0);
+	}
 }
