@@ -1,8 +1,11 @@
 package chat.model;
 
 import twitter4j.*;
+
 import java.util.ArrayList;
+
 import chat.controller.ChatController;
+
 import java.util.*;
 import java.io.*;
 
@@ -136,5 +139,29 @@ public class CTECTwitter
 		}
 		tweetResults = "The top word in the tweets was" + wordsList.get(topWordLocation) + " and it was used " + topCount + " time!";
 		return tweetResults;
+	}
+
+	public void loadTweets(String userName) throws TwitterException
+	{
+		Paging statusPage = new Paging(1, 200);
+		int page = 1;
+		while(page <= 10)
+		{
+			statusPage.setPage(page);
+			statusList.addAll(chatbotTwitter.getUserTimeline(userName, statusPage));
+			page++;
+		}
+		for(Status currentStatus : statusList)
+		{
+			String[] tweetText = currentStatus.getText().split(" ");
+			for(String word : tweetText)
+			{
+				wordsList.add(removePunctuation(word).toLowerCase());
+			}
+		}
+		removeCommonEnglishWords(wordsList);
+		removeEmptyText();
+		
+		
 	}
 }
