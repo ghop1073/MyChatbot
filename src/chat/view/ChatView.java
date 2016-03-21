@@ -21,7 +21,7 @@ public class ChatView
 	public ChatView()
 	{
 		windowMessage = "THis Messag is brought to you by chatbot";
-		chatIcon = new ImageIcon(getClass().getResource("images/satan.png"));
+
 	}
 	
 

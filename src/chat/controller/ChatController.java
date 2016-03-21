@@ -22,6 +22,7 @@ public class ChatController
 
 	public ChatController()
 	{
+		myTwitter = new CTECTwitter(this);
 		chatDisplay = new ChatView();
 		String user = chatDisplay.getUserText("What is your name?");
 		gageChatBot = new Chatbot(user);
@@ -136,5 +137,11 @@ public class ChatController
 	{
 		chatDisplay.displayUserText("Goodbye, " + gageChatBot.getUserName() + " it has been my pleasure to talk to you");
 		System.exit(0);
+	}
+
+
+	public void sendTweet(String tweet)
+	{
+		myTwitter.sendTweet(tweet);
 	}
 }

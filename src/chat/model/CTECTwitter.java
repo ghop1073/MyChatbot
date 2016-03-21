@@ -19,17 +19,18 @@ public class CTECTwitter
 
 	public CTECTwitter(ChatController baseController)
 	{
+		
 		this.baseController = baseController;
 		this.statusList = new ArrayList <Status>();
 		this.wordsList = new ArrayList <String>();
 		this.chatbotTwitter = TwitterFactory.getSingleton();
 	}
 	
-	public void sendTweet(String message)
+	public void sendTweet(String tweet)
 	{
 		try
 		{
-			chatbotTwitter.updateStatus("I just tweeted from my Java Chatbot program @ChatbotCTEC!");
+			chatbotTwitter.updateStatus("<Gage Hopkins> I just tweeted from my Java Chatbot program @ChatbotCTEC!");
 		}
 		catch(TwitterException error)
 		{
@@ -87,15 +88,14 @@ public class CTECTwitter
 	{
 		String[] boringWords;
 		int wordCount = 0;
-		try
-		{
-			Scanner wordFile = new Scanner(new File("commonWords.txt"));
+		
+			Scanner wordFile = new Scanner(getClass().getResourceAsStream("commonWords.txt"));
 			while(wordFile.hasNext())
 			{
 				wordCount++;
 				wordFile.next();
 			}
-			wordFile.reset();
+			wordFile = new Scanner(getClass().getResourceAsStream("commonWords.txt"));
 			boringWords = new String[wordCount];
 			int boringWordCount = 0;
 			while(wordFile.hasNext())
@@ -104,12 +104,7 @@ public class CTECTwitter
 				boringWordCount++;
 			}
 			wordFile.close();
-		}
-		catch(FileNotFoundException error)
-		{
-			baseController.handleErrors(error.getMessage());
-			return new String[0];
-		}
+			
 		return boringWords;
 	}
 	
@@ -153,6 +148,8 @@ public class CTECTwitter
 		}
 		for(Status currentStatus : statusList)
 		{
+			statusList.clear();
+			wordsList.clear();
 			String[] tweetText = currentStatus.getText().split(" ");
 			for(String word : tweetText)
 			{
@@ -161,7 +158,23 @@ public class CTECTwitter
 		}
 		removeCommonEnglishWords(wordsList);
 		removeEmptyText();
-		
-		
 	}
+//	
+//	public String sampleInvestigation()
+//	{
+//		String results = "";
+//		
+//		Query query = new Query("school");
+//		query.setCount(100);
+//		query.setGeoCode(new GeoLocation(40.587521, -111.869178), 5, Query.MILES);
+//		query.setSince("2016-1-1");
+//		try
+//		{
+//			QueryResult result = chatbotTwitter.search(query);
+//			results.concat("Count : " + results.getTweets().size());
+//			for(Status tweet)
+//			
+//		}
+//	}
+//	
 }

@@ -1,12 +1,9 @@
 package chat.view;
 
 import javax.swing.*;
-
-
 import chat.controller.ChatController;
-
 import java.awt.event.*;
-
+import java.awt.Color;
 /**
  * 
  * @author ghop1073
@@ -16,46 +13,57 @@ import java.awt.event.*;
 public class ChatPanel extends JPanel
 {
 	
-	private ChatController baseController;
-	private SpringLayout baseLayout;
+	private ChatController chatController;
+	private JButton chatterButton;
+	private JTextArea chatterText;
+	private SpringLayout mainLayout;
+	private JTextField typingField;
+	private JButton getTweet;
+	private JButton sendTweet;
+	private JButton analyzeTwitterButton;
 	
-	private JButton chatButton;
-	private JTextArea chatTextViewer;
-	private JTextField chatTextField;
-	private JLabel chatLabel;
 	
-	private ChatFrame baseFrame; 
-	
-	public ChatPanel (ChatController baseController)
+	public ChatPanel(ChatController chatController)
 	{
-		this.baseController = baseController;
-		
-		baseLayout = new SpringLayout();
-		chatButton = new JButton("Submit");
-		chatTextViewer = new JTextArea(10,30);
-		chatTextField = new JTextField(30);
-		chatLabel = new JLabel();
-		
+				
+		this.chatController = chatController;
+		mainLayout = new SpringLayout();
+		chatterButton = new JButton("Click");
+		chatterText = new JTextArea("Input will be placed here ");
+		getTweet = new JButton("Tweet");
+		analyzeTwitterButton = new JButton("Check Twitter");
+		sendTweet = new JButton("Tweet");
 		
 		
 		setupPanel();
 		setupLayout();
 		setupListeners();
+
 	}
 	
-	/**
-	 * adding our GUI components, and setting them up for use. 
-	 */
 	private void setupPanel()
 	{
-		this.setLayout(baseLayout);
-		this.add(chatButton);
-		this.add(chatTextViewer);
-		this.add(chatTextField);
-		this.add(chatLabel);
-		chatTextViewer.setEnabled(false);
-		chatTextField.setToolTipText("Type here for chatBobt");
-		chatLabel.setText("Talk to me!");
+		this.setLayout(mainLayout);
+		this.add(chatterButton);
+		this.add(chatterText);
+		this.add(sendTweet);
+		this.add(analyzeTwitterButton);
+		
+		setForeground(Color.WHITE);
+		setBackground(Color.CYAN);
+		chatterText.setEnabled(false);
+		chatterText.setForeground(new Color(0, 0, 0));
+		chatterText.setBackground(new Color(250, 250, 210));
+		chatterText.setColumns(15);
+		chatterText.setLineWrap(true);
+		typingField = new JTextField("",15);
+		typingField.setBackground(new Color(250, 250, 210));
+		typingField.setToolTipText("#BlameAdam2015");
+		chatterButton.setForeground(new Color(0, 0, 0));
+		chatterButton.setBackground(new Color(250, 250, 210));
+		add(typingField);
+
+		
 		
 	}
 	
@@ -64,39 +72,60 @@ public class ChatPanel extends JPanel
 	 */
 	private void setupLayout()
 	{
-		baseLayout.putConstraint(SpringLayout.WEST, chatButton, 181, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, chatButton, -88, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.WEST, chatTextField, 206, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.SOUTH, chatTextField, -54, SpringLayout.NORTH, chatButton);
-		baseLayout.putConstraint(SpringLayout.WEST, chatLabel, 0, SpringLayout.WEST, chatButton);
-		baseLayout.putConstraint(SpringLayout.SOUTH, chatLabel, -25, SpringLayout.NORTH, chatTextField);
+		mainLayout.putConstraint(SpringLayout.SOUTH, chatterButton, -10, SpringLayout.SOUTH, this);
+		mainLayout.putConstraint(SpringLayout.EAST, chatterButton, -10, SpringLayout.EAST, this);
+		mainLayout.putConstraint(SpringLayout.NORTH, chatterText, 33, SpringLayout.NORTH, this);
+		mainLayout.putConstraint(SpringLayout.WEST, chatterText, -406, SpringLayout.EAST, this);
+		mainLayout.putConstraint(SpringLayout.SOUTH, chatterText, 229, SpringLayout.NORTH, this);
+		mainLayout.putConstraint(SpringLayout.EAST, chatterText, -39, SpringLayout.EAST, this);
+		mainLayout.putConstraint(SpringLayout.NORTH, typingField, -1, SpringLayout.NORTH, chatterButton);
+		mainLayout.putConstraint(SpringLayout.WEST, typingField, 10, SpringLayout.WEST, this);
+		mainLayout.putConstraint(SpringLayout.NORTH, sendTweet, 0, SpringLayout.NORTH, this);
+		mainLayout.putConstraint(SpringLayout.NORTH, analyzeTwitterButton, 0, SpringLayout.NORTH, sendTweet);
+		mainLayout.putConstraint(SpringLayout.WEST, sendTweet, 20, SpringLayout.WEST, this);
+		mainLayout.putConstraint(SpringLayout.EAST, analyzeTwitterButton, -21, SpringLayout.EAST, this);
 		
 	}
 	
 	private void setupListeners()
 	{
-		chatButton.addActionListener(new ActionListener()
+		chatterButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent Clicked)
+			public void actionPerformed(ActionEvent click)
 			{
-				String userText = chatTextField.getText(); //Grab user text
-				String response = baseController.fromUserToChatbot(userText); //send the text to the controller.
 				
-				chatTextViewer.append("\nUser:" + userText); //display user text.
-				chatTextViewer.append("\nChatbot:" + response); //display chatbot text.
-				chatTextField.setText(""); //clears field.
+				//give text to chatbot √
+				//give chatbots answer √
+				String userText = typingField.getText();//grab user text √
+				String response = chatController.fromUserToChatbot(userText);//send text to controller √
+				chatterText.append("\nUser: " + userText);//display text √
+				chatterText.append("\nChatbot: " + response); //display answer √
+				typingField.setText(""); //clear user field √ 
 			}
-		});
+	});	
+	
+	sendTweet.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			chatController.sendTweet("no text to send");
+		}
+	}
+	);
+	analyzeTwitterButton.addActionListener(new ActionListener()
+	{
+		public void actionPerformed(ActionEvent click)
+		{
+			String user = typingField.getText();
+			String results = chatController.analyze(user);
+			chatterText.setText(results);
+		}
+	});
 	}
 
-	
-	
-	
-	
-	
 	public JTextField getTextField()
 	{
-		return chatTextField;
+		return typingField;
 	}
 
 
