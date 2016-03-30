@@ -21,6 +21,8 @@ public class ChatPanel extends JPanel
 	private JButton getTweet;
 	private JButton sendTweet;
 	private JButton analyzeTwitterButton;
+	private JButton saveButton;
+	private JButton loadButton;
 	
 	
 	public ChatPanel(ChatController chatController)
